@@ -118,41 +118,44 @@
 </ul>
 </blockquote>
 <h3 id="Obtaining-OpenStack-Clients"><a href="#Obtaining-OpenStack-Clients" class="headerlink" title="Obtaining OpenStack Clients"></a>Obtaining OpenStack Clients</h3><p>Nova Client <a href="https://github.com/openstack/python-novaclient.git" target="_blank" rel="external">https://github.com/openstack/python-novaclient.git</a><br>Glance Client <a href="https://github.com/openstack/python-glanceclient.git" target="_blank" rel="external">https://github.com/openstack/python-glanceclient.git</a><br>Neutron Client <a href="https://github.com/openstack/python-neutronclient.git" target="_blank" rel="external">https://github.com/openstack/python-neutronclient.git</a><br>Cinder Client <a href="https://github.com/openstack/python-cinderclient.git" target="_blank" rel="external">https://github.com/openstack/python-cinderclient.git</a><br>Keystone Client <a href="https://github.com/openstack/python-keystoneclient.git" target="_blank" rel="external">https://github.com/openstack/python-keystoneclient.git</a> </p>
-<h3 id="Installing-OpenStack-Clients"><a href="#Installing-OpenStack-Clients" class="headerlink" title="Installing OpenStack Clients"></a>Installing OpenStack Clients</h3><p>When installing an OpenStack client, ensuring that the device where the client is to be installed is accessible to the public network.<br>Install Keystone Client first and then other clients in any sequence. This is because other clients rely on Keystone Client in the kilo version. </p>
-<ol>
-<li>Log in to the system as user root. </li>
-<li><p>Run the following commands in any directories to update the system: </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apt-get update </div><div class="line">apt-get upgrade</div></pre></td></tr></table></figure>
-</li>
-<li><p>Run the following commands to install the mandatory components: </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">apt-get install python-pip </div><div class="line">apt-get install git </div><div class="line">apt-get install python-dev</div><div class="line">``` </div><div class="line"></div><div class="line"><span class="number">4.</span> On the GIT CLI, run the following command to download Keystone Client source code. </div><div class="line">git clone https://github.com/openstack/python-keystoneclient.git</div><div class="line"></div><div class="line"><span class="number">5.</span> Run the following commands to switch to the kilo version: </div><div class="line">```python</div><div class="line">cd python-keystoneclient </div><div class="line">git checkout -b kilo <span class="number">1.2</span><span class="number">.0</span> </div><div class="line">``` </div><div class="line"></div><div class="line">&gt; * kilo indicates the distribution name <span class="keyword">and</span> can be customized. <span class="number">1.2</span><span class="number">.0</span> indicates the kilo version (Keystone client version) <span class="keyword">and</span> cannot be changed. </div><div class="line"></div><div class="line"><span class="number">6.</span> Run the following command to modify the requirements.txt file:</div><div class="line">```python </div><div class="line">vi equirements.txt</div><div class="line">``` </div><div class="line"></div><div class="line">Change &gt;= <span class="keyword">in</span> all versions starting <span class="keyword">with</span> oslo of dependence libraries <span class="keyword">in</span> the requirements.txt file to ==. This <span class="keyword">is</span> because that high version oslo libraries do <span class="keyword">not</span> support kilo clients. </div><div class="line">For Keystone Client, modify the configuration file <span class="keyword">as</span> follows: </div><div class="line">− Change oslo.config&gt;=<span class="number">1.6</span><span class="number">.0</span> to oslo.config==<span class="number">1.6</span><span class="number">.0</span>. </div><div class="line">− Change oslo.i18n&gt;=<span class="number">1.3</span><span class="number">.0</span> to oslo.i18n==<span class="number">1.3</span><span class="number">.0</span>. </div><div class="line">− Change oslo.serialization&gt;=<span class="number">1.2</span><span class="number">.0</span> to oslo.serialization==<span class="number">1.2</span><span class="number">.0</span>. </div><div class="line">− Change oslo.utils&gt;=<span class="number">1.2</span><span class="number">.0</span> to oslo.utils==<span class="number">1.2</span><span class="number">.0</span>. </div><div class="line"></div><div class="line"><span class="number">7.</span> Run the following command to install the client dependence library:</div><div class="line">```python </div><div class="line">pip install -r requirements.txt</div></pre></td></tr></table></figure>
-</li>
-<li><p>Run the following command to install Keystone Client: </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install .</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>In the preceding command, a dot (.) follows install. </p>
-<ol>
-<li>After installing the OpenStack client, run the following command on it to query the OpenStack client version: <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Service name --version</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>For Keystone, run the following command:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keystone --version</div></pre></td></tr></table></figure></p>
-<ol>
-<li>Install Nova Client, Glance Client, Neutron Client, and Cinder Client, respectively. For details, see steps 4 to 9.<br>*for glance installation, need to vi requirement.txt and make oslo.utils==1.2.0</li>
-</ol>
+<h3 id="Installing-OpenStack-Clients"><a href="#Installing-OpenStack-Clients" class="headerlink" title="Installing OpenStack Clients"></a>Installing OpenStack Clients</h3><p>When installing an OpenStack client, ensuring that the device where the client is to be installed is accessible to the public network.<br>Install Keystone Client first and then other clients in any sequence. This is because other clients rely on Keystone Client in the kilo version.<br>Log in to the system as user root. </p>
+<p>update the system:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apt-get update </div><div class="line">apt-get upgrade</div></pre></td></tr></table></figure></p>
+<p>install the mandatory components:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">apt-get install python-pip </div><div class="line">apt-get install git </div><div class="line">apt-get install python-dev</div></pre></td></tr></table></figure></p>
+<p>On the GIT CLI, run the following command to download Keystone Client source code.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone https://github.com/openstack/python-keystoneclient.git</div></pre></td></tr></table></figure></p>
+<p>switch to the kilo version:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd python-keystoneclient </div><div class="line">git checkout -b kilo 1.2.0</div></pre></td></tr></table></figure></p>
+<pre><code>- kilo indicates the distribution name and can be customized. 1.2.0 indicates the kilo version (Keystone client version) and cannot be changed. 
+</code></pre><p>modify the requirements.txt file:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi requirements.txt</div></pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>Change &gt;= in all versions starting with oslo of dependence libraries in the requirements.txt file to ==. This is because that high version oslo libraries do  not support kilo clients. </li>
+<li>For Keystone Client, modify the configuration file as follows: <pre><code>− Change oslo.config&gt;=1.6.0 to oslo.config==1.6.0. 
+− Change oslo.i18n&gt;=1.3.0 to oslo.i18n==1.3.0. 
+− Change oslo.serialization&gt;=1.2.0 to oslo.serialization==1.2.0. 
+− Change oslo.utils&gt;=1.2.0 to oslo.utils==1.2.0. 
+</code></pre></li>
+</ul>
+</blockquote>
+<p>install the client dependence library:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install -r requirements.txt</div></pre></td></tr></table></figure></p>
+<p>install Keystone Client:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install .</div></pre></td></tr></table></figure></p>
+<blockquote>
+<ul>
+<li>in the preceding command, a dot (.) follows install. </li>
+</ul>
+</blockquote>
+<p>After installing the OpenStack client, run the following command on it to query the OpenStack client version:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Service name --version</div></pre></td></tr></table></figure></p>
+<p>For Keystone, run the following command:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keystone --version</div></pre></td></tr></table></figure></p>
+<p>Install Nova Client, Glance Client, Neutron Client, and Cinder Client, respectively. For details, see steps 4 to 9.<br>*for glance installation, need to vi requirement.txt and make oslo.utils==1.2.0</p>
 <h3 id="Configuring-OpenStack-Client"><a href="#Configuring-OpenStack-Client" class="headerlink" title="Configuring OpenStack Client"></a>Configuring OpenStack Client</h3><p>The OpenStack APIs provided by the Open Telekom Cloud system use HTTPS. Therefore, you need to add parameter –insecure when you use OpenStack Client to visit the system.<br>If you require to use a command without parameter –insecure, see A.5 Configuring the CLI Not Containing insecure.<br>For details about how to use OpenStack Client to invoke the native APIs, see 3 CLI-based API Invoking Examples. </p>
 <ol>
 <li>In the OpenStack Client installation directory, create an environment variable file, such as novarc. </li>
-<li>Run the following command to edit the environment variable file: <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi novarc</div></pre></td></tr></table></figure>
+<li>edit the environment variable file: </li>
+</ol>
+<p>An example is provided as follows:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">export OS_USERNAME=&quot;14610751 OTC00000000001000000***&quot; </div><div class="line">export OS_TENANT_NAME=eu-de </div><div class="line">export OS_PROJECT_NAME=eu-de </div><div class="line">export OS_PASSWORD=******** </div><div class="line">export OS_AUTH_URL=https://iam.eu-de.otc.t-systems.com:443/v3 </div><div class="line">export NOVA_ENDPOINT_TYPE=publicURL </div><div class="line">export OS_ENDPOINT_TYPE=publicURL export CINDER_ENDPOINT_TYPE=publicURL </div><div class="line">export OS_VOLUME_API_VERSION=2 </div><div class="line">export OS_IDENTITY_API_VERSION=3 </div><div class="line">export OS_USER_DOMAIN_NAME=OTC0000000000100000*** </div><div class="line">export OS_IMAGE_API_VERSION=2</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>Switch to the directory that contains the environment variable file. </p>
 </li>
-</ol>
-<p>An example is provided as follows:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">export OS_USERNAME=<span class="string">"14610751 OTC00000000001000000***"</span> </div><div class="line">export OS_TENANT_NAME=eu-de </div><div class="line">export OS_PROJECT_NAME=eu-de </div><div class="line">export OS_PASSWORD=TestApi<span class="comment">#$ </span></div><div class="line">export OS_AUTH_URL=https://iam.eu-de.otc.t-systems.com:<span class="number">443</span>/v3 </div><div class="line">export NOVA_ENDPOINT_TYPE=publicURL </div><div class="line">export OS_ENDPOINT_TYPE=publicURL export CINDER_ENDPOINT_TYPE=publicURL </div><div class="line">export OS_VOLUME_API_VERSION=<span class="number">2</span> </div><div class="line">export OS_IDENTITY_API_VERSION=<span class="number">3</span> </div><div class="line">export OS_USER_DOMAIN_NAME=OTC0000000000100000*** </div><div class="line">export OS_IMAGE_API_VERSION=<span class="number">2</span></div></pre></td></tr></table></figure></p>
-<ol>
-<li>Switch to the directory that contains the environment variable file. </li>
-</ol>
-<p>For example, the novarc file is stored in the /root directory. Run the following command:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /root/nova</div></pre></td></tr></table></figure></p>
-<ol>
-<li>Run the following command to set the environment variables: <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source novarc</div></pre></td></tr></table></figure>
+<li><p>set the environment variables: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source openstackenv</div></pre></td></tr></table></figure>
 </li>
 </ol>
 
@@ -165,7 +168,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://akgbonn.github.io/2016/11/10/How-openstack-client-to-OTC/" data-id="civc64bmf00005sfvacgt0va3" class="article-share-link">
+      <a data-url="https://akgbonn.github.io/2016/11/10/How-openstack-client-to-OTC/" data-id="civc6vi0h0001g0fvbeo80tdm" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -225,7 +228,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="https://akgbonn.github.io/2016/11/10/Hello-OTC/" data-id="civc64bmj00015sfv0xe6yvgp" class="article-share-link">
+      <a data-url="https://akgbonn.github.io/2016/11/10/Hello-OTC/" data-id="civc6vi0e0000g0fvrn7sroxo" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
